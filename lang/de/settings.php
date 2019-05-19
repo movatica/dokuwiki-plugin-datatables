@@ -8,6 +8,6 @@
  */
  
 // for the configuration manager
-$lang['excludedPages']      = 'Ausgeschlossene Seiten (benutze Regulären Ausdrücke)';
-$lang['enableForAllTables'] = 'Aktiviert die Datentabellen für alle "gut formatierte " Tabellen';
-$lang['enableLocalization'] = 'Aktiviert die automatische Lokalisierung';
+$lang['excludedPages']      = 'Deaktivieren auf diesen Seiten (Regulärer Ausdruck)';
+$lang['enableForAllTables'] = 'DataTables Funktionen für alle DokuWiki Tabellen einschalten';
+$lang['enableLocalization'] = 'Lokalisierung einschalten';
