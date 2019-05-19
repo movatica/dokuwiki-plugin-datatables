@@ -27,9 +27,7 @@ class action_plugin_datatables extends DokuWiki_Action_Plugin {
       $controller->register_hook('DOKUWIKI_STARTED', 'AFTER', $this, 'jsinfo');
     }
 
-
     public function jsinfo(Doku_Event &$event, $param) {
-
       global $JSINFO;
       global $conf;
 
@@ -51,7 +49,6 @@ class action_plugin_datatables extends DokuWiki_Action_Plugin {
       }
 
       $JSINFO['plugin']['datatables'] = $datatables_config;
-
     }
 
     /**
@@ -60,69 +57,54 @@ class action_plugin_datatables extends DokuWiki_Action_Plugin {
      * @param  Doku_Event  &$event
      */
     public function datatables(Doku_Event &$event, $param) {
-
         global $ID;
-        global $conf;
-        global $JSINFO;
 
         $excluded_pages = $this->getConf('excludedPages');
 
-        if (! empty($excluded_pages) && (bool) preg_match("/$excluded_pages/", $ID)) {
+        if (!empty($excluded_pages) && (bool) preg_match("/$excluded_pages/", $ID)) {
           return false;
         }
 
-        $base_path = dirname(__FILE__) . '/assets/datatables';
         $base_url  = DOKU_BASE . 'lib/plugins/datatables/assets/datatables';
 
         $dt_scripts[] = "$base_url/media/js/jquery.dataTables.min.js";
-
         $dt_scripts[] = "$base_url/extensions/FixedHeader/js/dataTables.fixedHeader.min.js";
         $dt_scripts[] = "$base_url/extensions/FixedColumns/js/dataTables.fixedColumns.min.js";
-
         $dt_scripts[] = "$base_url/extensions/Buttons/js/dataTables.buttons.min.js";
         $dt_scripts[] = "$base_url/extensions/Buttons/js/buttons.html5.min.js";
         $dt_scripts[] = "$base_url/extensions/Buttons/js/buttons.print.min.js";
-
         $dt_scripts[] = "$base_url/extensions/Responsive/js/dataTables.responsive.min.js";
 
-
         switch($conf['template']) {
-
           case 'bootstrap3':
-
             $dt_scripts[] = "$base_url/media/js/dataTables.bootstrap.min.js";
             $dt_styles[]  = "$base_url/media/css/dataTables.bootstrap.min.css";
-
             $dt_styles[]  = "$base_url/extensions/FixedHeader/css/fixedHeader.bootstrap.min.css";
             $dt_styles[]  = "$base_url/extensions/FixedColumns/css/fixedColumns.bootstrap.min.css";
-
             $dt_scripts[] = "$base_url/extensions/Buttons/js/buttons.bootstrap.min.js";
             $dt_styles[]  = "$base_url/extensions/Buttons/css/buttons.bootstrap.min.css";
-
             $dt_scripts[] = "$base_url/extensions/Responsive/js/responsive.bootstrap.min.js";
             $dt_styles[]  = "$base_url/extensions/Responsive/css/responsive.bootstrap.min.css";
-
             break;
 
           default:
-
             $dt_styles[] = "$base_url/media/css/jquery.dataTables.min.css";
             $dt_styles[] = "$base_url/extensions/FixedHeader/css/fixedHeader.dataTables.min.css";
             $dt_styles[] = "$base_url/extensions/FixedColumns/css/fixedColumns.dataTables.min.css";
             $dt_styles[] = "$base_url/extensions/Buttons/css/buttons.dataTables.min.css";
             $dt_styles[] = "$base_url/extensions/Responsive/css/responsive.dataTables.min.css";
-
         }
 
         foreach ($dt_scripts as $script) {
-          $event->data['script'][] = array (
-            'type' => 'text/javascript',
-            'src'  => $script,
+          $event->data['script'][] = array(
+            'type'  => 'text/javascript',
+            'src'   => $script,
+            '_data' => ''
           );
         }
 
         foreach ($dt_styles as $style) {
-          $event->data['link'][] = array (
+          $event->data['link'][] = array(
             'type' => 'text/css',
             'rel'  => 'stylesheet',
             'href' => $style,
